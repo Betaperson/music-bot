@@ -5,7 +5,8 @@ const { clientId, guildId, token } = require('./config.json');
 
 const commands = [
 	new SlashCommandBuilder().setName('ping').setDescription('ur moms ping'),
-	new SlashCommandBuilder().setName('play').setDescription('Plays music').addStringOption(option => option.setName('query').setDescription('Track name or link.'))
+	new SlashCommandBuilder().setName('play').setDescription('Plays music').addStringOption(option => option.setName('query').setDescription('Track name or link.')),
+	new SlashCommandBuilder().setName('stop').setDescription('stoop playing teh music')
 ]
 	.map(command => command.toJSON());
 

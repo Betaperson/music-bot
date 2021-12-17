@@ -10,6 +10,14 @@ client.once('ready', () => {
 	console.log(`${client.user.tag} is logged in`);
 });
 
+const query = interaction.options.get('query').value;
+
+const queue = player.createQueue(interaction.guild, {
+  metadata: {
+    channel: interaction.channel
+  }
+});
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
   
@@ -28,13 +36,7 @@ client.on('interactionCreate', async interaction => {
           !== interaction.guild.me.voice.channelId) 
         return await interaction.reply({content: 'I do not see thy in VC.'});
         
-        const query = interaction.options.get('query').value;
 
-        const queue = player.createQueue(interaction.guild, {
-          metadata: {
-            channel: interaction.channel
-          }
-        });
         
         try {
           if (!queue.connection) await queue.connect(interaction.member.voice.channel); 
@@ -53,7 +55,11 @@ client.on('interactionCreate', async interaction => {
         queue.play(track);
 
         return await interaction.followUp({content: `Loading the track: ${track.title}.`})
+      case 'stop':
+        queue.destroy();
+      
+      }
     }
-  });
+  );
 
-client.login(token);
+  client.login(token); 
